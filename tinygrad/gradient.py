@@ -1,5 +1,6 @@
 from typing import cast, Iterator
 import math, functools, dataclasses
+import numpy as np
 from tinygrad.dtype import dtypes, sum_acc_dtype
 from tinygrad.ops import UOp, PatternMatcher, UPat, Ops, all_metadata
 from tinygrad.helpers import argsort
@@ -43,6 +44,7 @@ pm_gradient = PatternMatcher([
   (UPat(Ops.MULTI, name="ret"), lambda ctx, ret: ctx.shard(ret.device, ret.axis).src),
   # there's no gradient for bitcast
   (UPat(Ops.BITCAST), lambda ctx: (None,)),
+  (UPat(Ops.NROUND, name="ret"), lambda ctx, ret: (ctx * ctx.randint(ctx.shape, low=0, high=2).sub(0.5))),
 ])
 
 # copied from tensor.py, get relevant toposort of gradients

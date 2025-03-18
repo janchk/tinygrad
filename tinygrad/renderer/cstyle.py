@@ -56,6 +56,7 @@ base_rewrite = PatternMatcher([
      f".{'xyzwabcd'[x.arg[0]]}")),
   # custom passes through with format
   (UPat((Ops.CUSTOM, Ops.CUSTOMI), name="x"), lambda ctx,x: x.arg.format(*[ctx[y] for y in x.src])),
+  (UPat(Ops.NROUND, name="x"), lambda ctx,x: str(x.arg)),
 ])
 
 extra_pm = PatternMatcher([
@@ -96,7 +97,7 @@ class CStyleLanguage(Renderer):
     Ops.ADD: lambda a,b,dtype: f"({a}+{b})", Ops.SUB: lambda a,b,dtype: f"({a}-{b})", Ops.MUL: lambda a,b,dtype: f"({a}*{b})",
     Ops.MOD: lambda a,b,dtype: f"({a}%{b})", Ops.IDIV: lambda a,b,dtype: f"({a}/{b})", Ops.CMPNE: lambda a,b,dtype: f"({a}!={b})",
     Ops.SHR: lambda a,b,dtype: f"({a}>>{b})", Ops.SHL: lambda a,b,dtype: f"({a}<<{b})", Ops.CMPLT: lambda a,b,dtype: f"({a}<{b})",
-    Ops.WHERE: lambda a,b,c,dtype: f"({a}?{b}:{c})" }
+    Ops.WHERE: lambda a,b,c,dtype: f"({a}?{b}:{c})", Ops.NROUND: lambda x, dtype: f"{x}" }
 
   string_rewrite = base_rewrite
   extra_matcher = extra_pm

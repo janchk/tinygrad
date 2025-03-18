@@ -2792,6 +2792,10 @@ class Tensor(SimpleMathTrait):
     ```
     """
     return ((self > 0) == ((b := self.cast(dtypes.int32) / 2.0).cast(dtypes.int32) == b)).where((self - 0.5).ceil(), (self + 0.5).floor())
+  
+  def nround(self: Tensor) -> Tensor:
+
+    return self._apply_uop(UOp.nround)
 
   def isinf(self:Tensor, detect_positive:bool=True, detect_negative:bool=True) -> Tensor:
     """

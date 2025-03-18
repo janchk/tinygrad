@@ -89,6 +89,7 @@ class MathTrait(SimpleMathTrait):
   def log2(self): return self.alu(Ops.LOG2)
   def exp2(self): return self.alu(Ops.EXP2)
   def pow(self, x): return self.alu(Ops.POW, self.ufix(x))
+  def nround(self): return self.alu(Ops.NROUND)
 
 # the order of these Ops controls the order of the toposort
 class Ops(FastEnum):
@@ -121,6 +122,7 @@ class Ops(FastEnum):
 
   # UnaryOps
   CAST = auto(); BITCAST = auto(); EXP2 = auto(); LOG2 = auto(); SIN = auto(); SQRT = auto(); RECIP = auto(); NEG = auto() # noqa: E702
+  NROUND = auto()
 
   # load/store before math
   LOAD = auto(); STORE = auto() # noqa: E702
@@ -156,7 +158,7 @@ class Ops(FastEnum):
   CUSTOM = auto(); CUSTOMI = auto() # noqa: E702
 
 class GroupOp:
-  Unary = {Ops.EXP2, Ops.LOG2, Ops.SIN, Ops.SQRT, Ops.RECIP, Ops.NEG}
+  Unary = {Ops.EXP2, Ops.LOG2, Ops.SIN, Ops.SQRT, Ops.RECIP, Ops.NEG, Ops.NROUND}
   Binary = {Ops.ADD, Ops.MUL, Ops.IDIV, Ops.MAX, Ops.MOD, Ops.CMPLT, Ops.CMPNE, Ops.XOR, Ops.SHL, Ops.SHR, Ops.OR, Ops.AND, Ops.THREEFRY,
             Ops.SUB, Ops.FDIV, Ops.POW}
   Ternary = {Ops.WHERE, Ops.MULACC}
