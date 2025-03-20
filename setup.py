@@ -16,7 +16,7 @@ testing_minimal = [
 ]
 
 setup(name='tinygrad',
-      version='0.10.2',
+      version='0.10.2-noisy',
       description='You like pytorch? You like micrograd? You love tinygrad! <3',
       author='George Hotz',
       license='MIT',
